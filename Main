@@ -1,0 +1,42 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+	public static void main(String[] args) {
+		ListDominos listeDominos= new ListDominos();
+		
+        //choisir le nb de joueur.
+		Scanner scan = new Scanner(System.in);
+		boolean isInclued;
+		isInclued = false;
+		int nbJoueur = 0;
+
+		do {
+			System.out.println("Combien de joueurs êtes vous ? ");
+			System.out.println("(choisir entre 2, 3 ou 4)");
+
+			try {
+				nbJoueur = scan.nextInt();
+				if (nbJoueur == 2 || nbJoueur == 3 || nbJoueur == 4) {
+					isInclued = true;
+				} else {
+					System.out.println("ce n'est pas compris entre 2 et 4...");
+
+				}
+			}
+			catch (Exception e) {
+				System.out.println("ce n'est pas un entier compris entre 2 et4...");
+				scan.nextLine();
+			}
+		} while (!isInclued);
+
+		System.out.println("\n" + "Vous êtes " + nbJoueur + " joueurs pour cette partie.");
+		System.out.println("Bon courage...");
+
+		/*---------------------------------------------------------------------------------*/
+		listeDominos.ListeDepart(nbJoueur);
+		
+	}
+}
+
