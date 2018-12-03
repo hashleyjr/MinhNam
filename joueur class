@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class joueur {
+	Map<Integer, ArrayList> joueurTour = new HashMap<Integer, ArrayList>();
+	Map<Integer, Object> joueurProchainTour = new HashMap<Integer, Object>();
+
+	public Map<Integer, ArrayList> getJoueurTour() {
+		return joueurTour;
+	}
+
+	public void setJoueurTour(Integer key, ArrayList value) {
+		joueurTour.put(key, value);
+		this.joueurTour = joueurTour;
+	}
+
+	public Map<Integer, Object> getJoueurProchainTour() {
+		return joueurProchainTour;
+	}
+
+	public void setJoueurProchainTour(Integer key, ArrayList value) {
+		joueurProchainTour.put(key, value);
+		this.joueurProchainTour = joueurProchainTour;
+	}
+
+}
