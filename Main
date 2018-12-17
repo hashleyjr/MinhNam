@@ -36,33 +36,32 @@ public class Main {
 
 		/*---------------------------------------------------------------------------------*/
 		listeDominos.ListeDepart(nbJoueur);
+		ArrayList<String> listeJoueur = new ArrayList<String>();
+		listeJoueur.add("J1");
+		listeJoueur.add("J2");
+		listeJoueur.add("J3");
+		listeJoueur.add("J4");
 
-		
 		System.out.println("\n\n"+"quel est le nom du 1er joueur ?");
-		String Joueur1= scan.next();
+		Joueur J1 = new Joueur(scan.next());
 		System.out.println("quel est le nom du 2e joueur?");
-		String Joueur2= scan.next();
-		
+		Joueur J2 = new Joueur(scan.next());		
 		if(nbJoueur==4) {
 			System.out.println("quel est le nom du 3e joueur?");
-			String Joueur3= scan.next();
+			Joueur J3 = new Joueur(scan.next());
 			
 			System.out.println("quel est le nom du 4e joueur?");
-			String Joueur4= scan.next();
-			
-			System.out.println("\n\n"+" les joueurs sont "+ Joueur1+", "+Joueur2 +", " +Joueur3+" et "+Joueur4);
-	
+			Joueur J4 = new Joueur(scan.next());
+
 		}
 		else if (nbJoueur==3) {
 			System.out.println("quel est le nom du 3e joueur?");
-			String Joueur3= scan.next();
-			System.out.println("\n\n"+" les joueurs sont "+ Joueur1+", "+Joueur2 +" "
-					+ "et " +Joueur3);
+			Joueur J3= new Joueur(scan.next());
 	
 		}
-		else {
-		System.out.println("\n\n"+" les joueurs sont "+ Joueur1+" et "+Joueur2);
-		}
+		Collections.shuffle(listeJoueur);
+		System.out.println("Ordre des joueurs au premier tour" + listeJoueur);
+	
 	}
 }
 
