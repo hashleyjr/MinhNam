@@ -10,8 +10,7 @@ public class ListDominos {
 	private ArrayList<String> domParametre1 = new ArrayList<String>();
 	private ArrayList<String> domParametre2 = new ArrayList<String>();
 	private ArrayList<Object> domParametre = new ArrayList<Object>();
-	String csvFile = "C:\\Users\\hugog.LEMIENAMOI.000\\Documents\\Cours\\ISEP\\CoursJava\\dominos.csv"; // chemin du
-																										// fichier
+	String csvFile = "./dominos.csv"; // chemin du fichier
 	BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
@@ -29,9 +28,14 @@ public class ListDominos {
 				// parametre de la moitié du domino
 				domParametre1.add(dominos[0]);
 				domParametre1.add(dominos[1]);
+				domParametre1.add("x");
+				domParametre1.add("y");
+
 				// parametre de l'autre moitié du domino
 				domParametre2.add(dominos[2]);
 				domParametre2.add(dominos[3]);
+				domParametre2.add("x");
+				domParametre2.add("y");
 				// le domino avec des clones des paramètres pour pouvoir "clear " les listes à
 				// chaque boucle
 				domParametre.add(domParametre1.clone());
