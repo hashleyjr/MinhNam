@@ -1,10 +1,15 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class joueur {
+public class Joueur {
+	String nom; 
+
 	Map<Integer, ArrayList> joueurTour = new HashMap<Integer, ArrayList>();
 	Map<Integer, Object> joueurProchainTour = new HashMap<Integer, Object>();
+
+	public Joueur(String nom) {
+		this.nom = nom;
+
+	}
 
 	public Map<Integer, ArrayList> getJoueurTour() {
 		return joueurTour;
@@ -23,5 +28,13 @@ public class joueur {
 		joueurProchainTour.put(key, value);
 		this.joueurProchainTour = joueurProchainTour;
 	}
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
 }
+
