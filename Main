@@ -36,7 +36,33 @@ public class Main {
 
 		/*---------------------------------------------------------------------------------*/
 		listeDominos.ListeDepart(nbJoueur);
+
 		
+		System.out.println("\n\n"+"quel est le nom du 1er joueur ?");
+		String Joueur1= scan.next();
+		System.out.println("quel est le nom du 2e joueur?");
+		String Joueur2= scan.next();
+		
+		if(nbJoueur==4) {
+			System.out.println("quel est le nom du 3e joueur?");
+			String Joueur3= scan.next();
+			
+			System.out.println("quel est le nom du 4e joueur?");
+			String Joueur4= scan.next();
+			
+			System.out.println("\n\n"+" les joueurs sont "+ Joueur1+", "+Joueur2 +", " +Joueur3+" et "+Joueur4);
+	
+		}
+		else if (nbJoueur==3) {
+			System.out.println("quel est le nom du 3e joueur?");
+			String Joueur3= scan.next();
+			System.out.println("\n\n"+" les joueurs sont "+ Joueur1+", "+Joueur2 +" "
+					+ "et " +Joueur3);
+	
+		}
+		else {
+		System.out.println("\n\n"+" les joueurs sont "+ Joueur1+" et "+Joueur2);
+		}
 	}
 }
 
