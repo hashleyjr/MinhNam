@@ -23,6 +23,26 @@ public class Play extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
+		Input input =gc.getInput();
+		int xpos = Mouse.getX();
+		int ypos = Mouse.getY();
+		if(input.isMousePressed(0))
+			{
+				for(int a=0 ;a<10;a++)
+				{
+					for (int b=0; b<10;b++)
+					{
+						if (xpos>(windows.WIDTH/9)*a && xpos<(windows.WIDTH/9)*(a+1) && ypos>(windows.HEIGHT/9)*b && ypos<(windows.HEIGHT/9)*(b+1))
+						{
+
+							g.setColor(Color.yellow);
+							g.fillRect((windows.WIDTH/9)*a,(windows.HEIGHT/9)*b, 210, 120);
+							g.setColor(Color.white);
+
+						}
+					}
+				}
+			}
 	}
 
 	@Override

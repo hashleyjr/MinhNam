@@ -26,7 +26,9 @@ public class Domination extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		
+		ArrayList<Integer> listx = new ArrayList<>();
+		ArrayList<Integer> listy = new ArrayList<>();
+
 		
 	}
 
@@ -60,6 +62,8 @@ public class Domination extends BasicGameState {
 							g.setColor(Color.yellow);
 							g.fillRect((windows.WIDTH/9)*a,(windows.HEIGHT/9)*(8-b), 210, 120);
 							g.setColor(Color.white);
+							listx.add(xpos);
+							listy.add(ypos);
 						}
 					}
 				}

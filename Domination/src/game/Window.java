@@ -31,6 +31,7 @@ public class Window extends StateBasedGame{
 		
 		try {
 			AppGameContainer game = new AppGameContainer(new Window());
+			game.setTargetFrameRate(60);
 			game.setDisplayMode(windows.WIDTH, windows.HEIGHT, true/*plein écran*/);
 			game.setAlwaysRender(true);
 			game.start();
