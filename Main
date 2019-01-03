@@ -1,3 +1,5 @@
+package projetjava;
+
 import java.util.*;
 import java.io.*;
 
@@ -37,28 +39,25 @@ public class Main {
 		/*---------------------------------------------------------------------------------*/
 		listeDominos.ListeDepart(nbJoueur);
 		ArrayList<String> listeJoueur = new ArrayList<String>();
+
 		listeJoueur.add("J1");
 		listeJoueur.add("J2");
-		listeJoueur.add("J3");
-		listeJoueur.add("J4");
-
-		System.out.println("\n\n"+"quel est le nom du 1er joueur ?");
-		Joueur J1 = new Joueur(scan.next());
-		System.out.println("quel est le nom du 2e joueur?");
-		Joueur J2 = new Joueur(scan.next());		
-		if(nbJoueur==4) {
-			System.out.println("quel est le nom du 3e joueur?");
-			Joueur J3 = new Joueur(scan.next());
-			
-			System.out.println("quel est le nom du 4e joueur?");
-			Joueur J4 = new Joueur(scan.next());
+		Joueur J1 = new Joueur("J1");
+		Joueur J2 = new Joueur("J2");
+		if (nbJoueur==3) {
+			listeJoueur.add("J3");
+			Joueur J3 = new Joueur("J3");
+		}
+		if (nbJoueur==4) {
+			listeJoueur.add("J3");
+			Joueur J3 = new Joueur("J3");
+			listeJoueur.add("J4");
+			Joueur J4 = new Joueur("J4");
 
 		}
-		else if (nbJoueur==3) {
-			System.out.println("quel est le nom du 3e joueur?");
-			Joueur J3= new Joueur(scan.next());
-	
-		}
+		
+		
+		
 		Collections.shuffle(listeJoueur);
 		System.out.println("Ordre des joueurs au premier tour" + listeJoueur);
 	
