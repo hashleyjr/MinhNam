@@ -18,33 +18,33 @@ public class ListDominos {
 	String cvsSplitBy = ",";
 
 	{
-		// créer la map de la liste des dominos
+		// crÃ©er la map de la liste des dominos
 		try {
 
 			br = new BufferedReader(new FileReader(csvFile));
 			br.readLine(); // on skip la ligne 1
 			while ((line = br.readLine()) != null) {
 
-				// utilise une virgule comme séparateur
+				// utilise une virgule comme sÃ©parateur
 				String[] dominos = line.split(cvsSplitBy);
-				// parametre de la moitié du domino
+				// parametre de la moitiÃ© du domino
 				domParametre1.add(dominos[0]);
 				domParametre1.add(dominos[1]);
 				domParametre1.add("x");
 				domParametre1.add("y");
 
-				// parametre de l'autre moitié du domino
+				// parametre de l'autre moitiÃ© du domino
 				domParametre2.add(dominos[2]);
 				domParametre2.add(dominos[3]);
 				domParametre2.add("x");
 				domParametre2.add("y");
-				// le domino avec des clones des paramètres pour pouvoir "clear " les listes à
+				// le domino avec des clones des paramÃ¨tres pour pouvoir "clear " les listes Ã 
 				// chaque boucle
 				domParametre.add(domParametre1.clone());
 				domParametre.add(domParametre2.clone());
-				listeDominos.put(Integer.parseInt(dominos[4]), domParametre.clone()); // on ajoute le domino à la map
+				listeDominos.put(Integer.parseInt(dominos[4]), domParametre.clone()); // on ajoute le domino Ã  la map
 																						// listeDominos
-				// on vide les listes pour les réutiliser
+				// on vide les listes pour les rÃ©utiliser
 				domParametre.clear();
 				domParametre1.clear();
 				domParametre2.clear();
@@ -73,7 +73,7 @@ public class ListDominos {
 	
 	// Choisir le nombre de dominos en fonction du nb de joueur.
 	
-	public void ListeDepart(int nbJoueur) {
+	public Map<Integer,Object> ListeDepart(int nbJoueur) {
 	if (nbJoueur == 2) {
 		Set keys = listeDominos.keySet();
 		while (keys.size()>12*2) {
@@ -83,8 +83,7 @@ public class ListDominos {
 				listeDominos.remove(valeur);
 			}		
 		}
-		System.out.println("\n"+"il y a "+ keys.size()+" dominos dans la pioche.");
-		System.out.println( listeDominos);
+		return(listeDominos);
 	}
 	else if (nbJoueur == 3) {
 		Set keys = listeDominos.keySet();
@@ -95,13 +94,13 @@ public class ListDominos {
 				listeDominos.remove(valeur);
 			}		
 		}
-		System.out.println("\n"+"il y a "+ keys.size()+" dominos dans la pioche.");
-		System.out.println(listeDominos);
+		return(listeDominos);
+
 	}
 	else {
 		Set keys = listeDominos.keySet();
-		System.out.println("\n"+"il y a "+ keys.size()+" dominos dans la pioche.");
-		System.out.println(listeDominos);
+		return(listeDominos);
+
 	}
 	}
 }
