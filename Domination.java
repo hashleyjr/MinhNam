@@ -30,6 +30,9 @@ public class Domination extends BasicGameState {
 	int joueur = 1;
 	int tour = 0;
 	ArrayList<ArrayList<Integer>> possible = new ArrayList<>();
+	ArrayList<ArrayList<Integer>> possible2 = new ArrayList<>();
+	ArrayList<ArrayList<Integer>> possible3 = new ArrayList<>();
+	ArrayList<ArrayList<Integer>> possible4 = new ArrayList<>();
 
 	
 	
@@ -182,7 +185,11 @@ public class Domination extends BasicGameState {
 							}
 						}
 					}
-						
+						if(tour ==2)
+						{
+							joueur =2;
+							tour =0;
+						}
 				}
 				if(joueur == 2 )
 				{	
@@ -196,27 +203,105 @@ public class Domination extends BasicGameState {
 							{
 								if (xpos>(windows.WIDTH/27)*a && xpos<(windows.WIDTH/27)*(a+1) && ypos>(windows.HEIGHT/27)*b && ypos<(windows.HEIGHT/27)*(b+1) )
 								{
-									ArrayList<Integer> point2 = new ArrayList<>();
-									point2.add((windows.WIDTH/27)*a);
-									point2.add(((windows.HEIGHT/27)*(26-b)));
+									ArrayList<Integer> point = new ArrayList<>();
+									point.add((windows.WIDTH/27)*a);
+									point.add(((windows.HEIGHT/27)*(26-b)));
+									
+									ArrayList<Integer> departdroite = new ArrayList<>();
+									departdroite.add(1562+71);
+									departdroite.add(160);
+									ArrayList<Integer> departgauche = new ArrayList<>();
+									departgauche.add(1562-71);
+									departgauche.add(160);
+									ArrayList<Integer> departhaut = new ArrayList<>();
+									departhaut.add(1562);
+									departhaut.add(200);
+									ArrayList<Integer> departbas = new ArrayList<>();
+									departbas.add(1562);
+									departbas.add(120);
+									
+									possible2.add(departdroite);
+									possible2.add(departgauche);
+									possible2.add(departhaut);
+									possible2.add(departbas);
+									
+									
 									g.setColor(Color.yellow);
-									if(!coordinates.contains(point2))
+									if(!coordinates.contains(point) )
 									{
-										g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
-			
-										listx.add(xpos);
-										listy.add(ypos);
-										coordinates.add(point2);
-										tour++;
-										if(tour == 2 )
+										if(coordinates.size()==0 && possible2.contains(point))
 										{
-											joueur = 3;
-											tour =0;
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											
+											
+											possible2.add(droite);
+											possible2.add(gauche);
+											possible2.add(haut);
+											possible2.add(bas);
+											
+											
+											coordinates.add(point);
+											possible2.remove(point);
+											tour++;
+											System.out.println("possible:  "+possible);
+
+											System.out.println("point : "+point);
+											System.out.println("coordinates:  "+coordinates);
+										}
+										else if(possible2.contains(point))
+										{
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											
+											
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											possible2.add(droite);
+											possible2.add(gauche);
+											possible2.add(haut);
+											possible2.add(bas);
+											coordinates.add(point);
+											possible2.remove(point);
+											tour++;
 										}
 									}
 								}
 							}
 						}
+					}
+					if(tour ==2)
+					{
+						joueur =3;
+						tour =0;
 					}
 				}
 				if(joueur == 3 )
@@ -231,27 +316,104 @@ public class Domination extends BasicGameState {
 							{
 								if (xpos>(windows.WIDTH/27)*a && xpos<(windows.WIDTH/27)*(a+1) && ypos>(windows.HEIGHT/27)*b && ypos<(windows.HEIGHT/27)*(b+1))
 								{
-									ArrayList<Integer> point3 = new ArrayList<>();
-									point3.add((windows.WIDTH/27)*a);
-									point3.add(((windows.HEIGHT/27)*(26-b)));
+									ArrayList<Integer> point = new ArrayList<>();
+									point.add((windows.WIDTH/27)*a);
+									point.add(((windows.HEIGHT/27)*(26-b)));
+									
+									ArrayList<Integer> departdroite = new ArrayList<>();
+									departdroite.add(284+71);
+									departdroite.add(160);
+									ArrayList<Integer> departgauche = new ArrayList<>();
+									departgauche.add(284-71);
+									departgauche.add(160);
+									ArrayList<Integer> departhaut = new ArrayList<>();
+									departhaut.add(284);
+									departhaut.add(200);
+									ArrayList<Integer> departbas = new ArrayList<>();
+									departbas.add(284);
+									departbas.add(120);
+									
+									possible3.add(departdroite);
+									possible3.add(departgauche);
+									possible3.add(departhaut);
+									possible3.add(departbas);
+									
 									g.setColor(Color.yellow);
-									if(!coordinates.contains(point3))
+									if(!coordinates.contains(point) )
 									{
-										g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
-			
-										listx.add(xpos);
-										listy.add(ypos);
-										coordinates.add(point3);
-										tour++;
-										if(tour == 2 )
+										if(coordinates.size()==0 && possible3.contains(point))
 										{
-											joueur = 4;
-											tour =0;
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											
+											
+											possible3.add(droite);
+											possible3.add(gauche);
+											possible3.add(haut);
+											possible3.add(bas);
+											
+											
+											coordinates.add(point);
+											possible3.remove(point);
+											tour++;
+											System.out.println("possible:  "+possible);
+
+											System.out.println("point : "+point);
+											System.out.println("coordinates:  "+coordinates);
+										}
+										else if(possible3.contains(point))
+										{
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											
+											
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											possible3.add(droite);
+											possible3.add(gauche);
+											possible3.add(haut);
+											possible3.add(bas);
+											coordinates.add(point);
+											possible3.remove(point);
+											tour++;
 										}
 									}
 								}
 							}
 						}
+					}
+					if(tour ==2)
+					{
+						joueur =4;
+						tour =0;
 					}
 				}
 				if(joueur == 4 )
@@ -266,28 +428,104 @@ public class Domination extends BasicGameState {
 							{
 								if (xpos>(windows.WIDTH/27)*a && xpos<(windows.WIDTH/27)*(a+1) && ypos>(windows.HEIGHT/27)*b && ypos<(windows.HEIGHT/27)*(b+1))
 								{
-									ArrayList<Integer> point4 = new ArrayList<>();
-									point4.add((windows.WIDTH/27)*a);
-									point4.add(((windows.HEIGHT/27)*(26-b)));
+									ArrayList<Integer> point = new ArrayList<>();
+									point.add((windows.WIDTH/27)*a);
+									point.add(((windows.HEIGHT/27)*(26-b)));
+									
+									ArrayList<Integer> departdroite = new ArrayList<>();
+									departdroite.add(1562+71);
+									departdroite.add(880);
+									ArrayList<Integer> departgauche = new ArrayList<>();
+									departgauche.add(1562-71);
+									departgauche.add(880);
+									ArrayList<Integer> departhaut = new ArrayList<>();
+									departhaut.add(1562);
+									departhaut.add(920);
+									ArrayList<Integer> departbas = new ArrayList<>();
+									departbas.add(1562);
+									departbas.add(840);
+									
+									possible4.add(departdroite);
+									possible4.add(departgauche);
+									possible4.add(departhaut);
+									possible4.add(departbas);
 									g.setColor(Color.yellow);
-									if(!coordinates.contains(point4))
+									if(!coordinates.contains(point) )
 									{
-										g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
-			
-										listx.add(xpos);
-										listy.add(ypos);
-										coordinates.add(point4);
-										tour++;
-										if(tour == 2 )
+										if(coordinates.size()==0 && possible4.contains(point))
 										{
-											joueur = 1;
-											tour = 0;
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											
+											
+											possible4.add(droite);
+											possible4.add(gauche);
+											possible4.add(haut);
+											possible4.add(bas);
+											
+											
+											coordinates.add(point);
+											possible4.remove(point);
+											tour++;
+											System.out.println("possible:  "+possible);
+
+											System.out.println("point : "+point);
+											System.out.println("coordinates:  "+coordinates);
+										}
+										else if(possible4.contains(point))
+										{
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											
+											
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											possible4.add(droite);
+											possible4.add(gauche);
+											possible4.add(haut);
+											possible4.add(bas);
+											coordinates.add(point);
+											possible4.remove(point);
+											tour++;
 										}
 									}
 								}
 							}
 						}
 					}
+				}
+				if(tour ==2)
+				{
+					joueur =1;
+					tour =0;
 				}
 			}
 		
@@ -336,7 +574,7 @@ public class Domination extends BasicGameState {
 		{
 			g.drawLine(windows.WIDTH*2/3,(windows.HEIGHT/27)*j,windows.WIDTH,(windows.HEIGHT/27)*j);
 		}
-		castle.draw(1563, 160,213/3,40);
+		castle.draw(1562, 160,213/3,40);
 		g.drawString("Joueur 2 ", windows.WIDTH-100 , windows.HEIGHT/3 +10);
 		
 		
@@ -353,7 +591,7 @@ public class Domination extends BasicGameState {
 			g.drawLine(windows.WIDTH*2/3, (windows.HEIGHT/27)*j+(windows.HEIGHT/27)*18, windows.WIDTH, (windows.HEIGHT/27)*j+(windows.HEIGHT/27)*18);		
 		}
 		g.drawString("Joueur 4 ", windows.WIDTH -100 , windows.HEIGHT*2/3 -25);
-		castle.draw(1563, 880,213/3,40);
+		castle.draw(1562, 880,213/3,40);
 		g.drawString("Tour du joueur :  "+joueur, windows.WIDTH/2 , windows.HEIGHT/2);
 		
 	}
