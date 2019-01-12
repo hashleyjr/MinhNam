@@ -27,12 +27,22 @@ public class Domination extends BasicGameState {
 	ArrayList<ArrayList<Integer>>  coordinates = new ArrayList<>();
 	int i,j;
 	int color = 0;
-	int joueur = 1;
+	int joueur = 2;
 	int tour = 0;
+
 	ArrayList<ArrayList<Integer>> possible = new ArrayList<>();
 	ArrayList<ArrayList<Integer>> possible2 = new ArrayList<>();
 	ArrayList<ArrayList<Integer>> possible3 = new ArrayList<>();
 	ArrayList<ArrayList<Integer>> possible4 = new ArrayList<>();
+	
+	ArrayList<ArrayList<Integer>> possibledeux = new ArrayList<>();
+	ArrayList<ArrayList<Integer>> possibledeux2 = new ArrayList<>();
+	ArrayList<ArrayList<Integer>> possibledeux3 = new ArrayList<>();
+	ArrayList<ArrayList<Integer>> possibledeux4 = new ArrayList<>();
+	
+	ArrayList<Integer> interdit = new ArrayList<>();
+	
+	int demi = 1;
 
 	
 	
@@ -89,6 +99,7 @@ public class Domination extends BasicGameState {
 								
 								if (xpos>(windows.WIDTH/27)*a && xpos<(windows.WIDTH/27)*(a+1) && ypos>(windows.HEIGHT/27)*b && ypos<(windows.HEIGHT/27)*(b+1) )
 								{
+									System.out.println("ypos"+ypos);
 									ArrayList<Integer> point = new ArrayList<>();
 									point.add((windows.WIDTH/27)*a);
 									point.add(((windows.HEIGHT/27)*(26-b)));
@@ -114,6 +125,13 @@ public class Domination extends BasicGameState {
 									g.setColor(Color.yellow);
 									System.out.println("point : "+point);
 									System.out.println("possible : "+possible);
+									System.out.println("possible:  "+possible);
+
+									System.out.println("coordinates:  "+coordinates);
+									System.out.println("possibledeux:   " + possibledeux);
+									System.out.println("demi  "+ demi);
+									System.out.println("interdit"+interdit);
+									System.out.println("size"+interdit.size());
 										if(!coordinates.contains(point) )
 										{
 											if(coordinates.size()==0 && possible.contains(point))
@@ -142,16 +160,26 @@ public class Domination extends BasicGameState {
 												possible.add(haut);
 												possible.add(bas);
 												
+												possibledeux.add(droite);
+												possibledeux.add(gauche);
+												possibledeux.add(haut);
+												possibledeux.add(bas);
+												
+
+												interdit.add((windows.WIDTH/27)*a+(71*5));
+												interdit.add((windows.WIDTH/27)*a-(71*5));
+												interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+												interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
+												
 												
 												coordinates.add(point);
 												possible.remove(point);
 												tour++;
-												System.out.println("possible:  "+possible);
-
-												System.out.println("point : "+point);
-												System.out.println("coordinates:  "+coordinates);
+												demi++;
+												
 											}
-											else if(possible.contains(point))
+											else if((demi == 1 && possible.contains(point)) && (!interdit.contains(point.get(0)) && !interdit.contains(point.get(1))))
 											{
 												g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
 												
@@ -172,24 +200,85 @@ public class Domination extends BasicGameState {
 												bas.add((windows.WIDTH/27)*a);
 												bas.add(((windows.HEIGHT/27)*(26-b))-40);
 												
+												
+												
 												possible.add(droite);
 												possible.add(gauche);
 												possible.add(haut);
 												possible.add(bas);
+												
+												possibledeux.add(droite);
+												possibledeux.add(gauche);
+												possibledeux.add(haut);
+												possibledeux.add(bas);
+												
+												
+												
+												interdit.add((windows.WIDTH/27)*a+(71*5));
+												interdit.add((windows.WIDTH/27)*a-(71*5));
+												interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+												interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+												
+												
+												coordinates.add(point);
+												possible.remove(point);
+												demi++;
+												tour++;
+												
+											}
+											else if(demi == 2 && possibledeux.contains(point) && possible.contains(point) && (!interdit.contains(point.get(0)) && !interdit.contains(point.get(1))) )
+											{
+												g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+												
+												listx.add(xpos);
+												listy.add(ypos);
+												
+												
+												ArrayList<Integer> droite = new ArrayList<>();
+												droite.add((windows.WIDTH/27)*a+71);
+												droite.add(((windows.HEIGHT/27)*(26-b)));
+												ArrayList<Integer> gauche = new ArrayList<>();
+												gauche.add((windows.WIDTH/27)*a-71);
+												gauche.add(((windows.HEIGHT/27)*(26-b)));
+												ArrayList<Integer> haut = new ArrayList<>();
+												haut.add((windows.WIDTH/27)*a);
+												haut.add(((windows.HEIGHT/27)*(26-b))+40);
+												ArrayList<Integer> bas = new ArrayList<>();
+												bas.add((windows.WIDTH/27)*a);
+												bas.add(((windows.HEIGHT/27)*(26-b))-40);
+												
+												
+												interdit.add((windows.WIDTH/27)*a+(71*5));
+												interdit.add((windows.WIDTH/27)*a-(71*5));
+												interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+												interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+												
+												
+												possible.add(droite);
+												possible.add(gauche);
+												possible.add(haut);
+												possible.add(bas);
+												
+												possibledeux.clear();
+												
 												coordinates.add(point);
 												possible.remove(point);
 												tour++;
+												demi = 1;
+												
 											}
 										}
 								}
 							}
 						}
 					}
-						if(tour ==2)
-						{
-							joueur =2;
-							tour =0;
-						}
+					if(tour ==2)
+					{
+						joueur =1;
+						tour =0;
+						
+					}
+
 				}
 				if(joueur == 2 )
 				{	
@@ -203,6 +292,7 @@ public class Domination extends BasicGameState {
 							{
 								if (xpos>(windows.WIDTH/27)*a && xpos<(windows.WIDTH/27)*(a+1) && ypos>(windows.HEIGHT/27)*b && ypos<(windows.HEIGHT/27)*(b+1) )
 								{
+									System.out.println("ypos"+ypos);
 									ArrayList<Integer> point = new ArrayList<>();
 									point.add((windows.WIDTH/27)*a);
 									point.add(((windows.HEIGHT/27)*(26-b)));
@@ -255,16 +345,24 @@ public class Domination extends BasicGameState {
 											possible2.add(haut);
 											possible2.add(bas);
 											
+											possibledeux2.add(droite);
+											possibledeux2.add(gauche);
+											possibledeux2.add(haut);
+											possibledeux2.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
 											
 											coordinates.add(point);
 											possible2.remove(point);
 											tour++;
-											System.out.println("possible:  "+possible);
-
-											System.out.println("point : "+point);
-											System.out.println("coordinates:  "+coordinates);
+											demi++;
+											
 										}
-										else if(possible2.contains(point))
+										else if(demi == 1 && possible2.contains(point)&& (!interdit.contains(point.get(0)) && !interdit.contains(point.get(1))))
 										{
 											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
 											
@@ -289,9 +387,60 @@ public class Domination extends BasicGameState {
 											possible2.add(gauche);
 											possible2.add(haut);
 											possible2.add(bas);
+											
+											possibledeux2.add(droite);
+											possibledeux2.add(gauche);
+											possibledeux2.add(haut);
+											possibledeux2.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
 											coordinates.add(point);
 											possible2.remove(point);
+											demi++;
 											tour++;
+											
+										}
+										else if(demi == 2 && possibledeux2.contains(point) && possible2.contains(point)&& (!interdit.contains(point.get(0)) && !interdit.contains(point.get(1))) )
+										{
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											
+											
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											possible2.add(droite);
+											possible2.add(gauche);
+											possible2.add(haut);
+											possible2.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
+											possibledeux2.clear();
+											
+											coordinates.add(point);
+											possible.remove(point);
+											tour++;
+											demi = 1;
 										}
 									}
 								}
@@ -300,7 +449,7 @@ public class Domination extends BasicGameState {
 					}
 					if(tour ==2)
 					{
-						joueur =3;
+						joueur =2;
 						tour =0;
 					}
 				}
@@ -316,6 +465,7 @@ public class Domination extends BasicGameState {
 							{
 								if (xpos>(windows.WIDTH/27)*a && xpos<(windows.WIDTH/27)*(a+1) && ypos>(windows.HEIGHT/27)*b && ypos<(windows.HEIGHT/27)*(b+1))
 								{
+									
 									ArrayList<Integer> point = new ArrayList<>();
 									point.add((windows.WIDTH/27)*a);
 									point.add(((windows.HEIGHT/27)*(26-b)));
@@ -367,16 +517,24 @@ public class Domination extends BasicGameState {
 											possible3.add(haut);
 											possible3.add(bas);
 											
+											possibledeux3.add(droite);
+											possibledeux3.add(gauche);
+											possibledeux3.add(haut);
+											possibledeux3.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
 											
 											coordinates.add(point);
 											possible3.remove(point);
 											tour++;
-											System.out.println("possible:  "+possible);
-
-											System.out.println("point : "+point);
-											System.out.println("coordinates:  "+coordinates);
+											demi++;
+											
 										}
-										else if(possible3.contains(point))
+										else if(demi == 1 && possible3.contains(point) && (!interdit.contains(point.get(0)) && !interdit.contains(point.get(1))))
 										{
 											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
 											
@@ -401,9 +559,60 @@ public class Domination extends BasicGameState {
 											possible3.add(gauche);
 											possible3.add(haut);
 											possible3.add(bas);
+											
+											possibledeux3.add(droite);
+											possibledeux3.add(gauche);
+											possibledeux3.add(haut);
+											possibledeux3.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
 											coordinates.add(point);
-											possible3.remove(point);
+											possible.remove(point);
+											demi++;
 											tour++;
+											
+										}
+										else if(demi == 2 && possibledeux3.contains(point) && possible3.contains(point)&& (!interdit.contains(point.get(0)) && !interdit.contains(point.get(1))) )
+										{
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											
+											
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											possible3.add(droite);
+											possible3.add(gauche);
+											possible3.add(haut);
+											possible3.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
+											possibledeux3.clear();
+											
+											coordinates.add(point);
+											possible.remove(point);
+											tour++;
+											demi = 1;
 										}
 									}
 								}
@@ -412,7 +621,7 @@ public class Domination extends BasicGameState {
 					}
 					if(tour ==2)
 					{
-						joueur =4;
+						joueur =3;
 						tour =0;
 					}
 				}
@@ -478,16 +687,24 @@ public class Domination extends BasicGameState {
 											possible4.add(haut);
 											possible4.add(bas);
 											
+											possibledeux4.add(droite);
+											possibledeux4.add(gauche);
+											possibledeux4.add(haut);
+											possibledeux4.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
 											
 											coordinates.add(point);
-											possible4.remove(point);
+											possible.remove(point);
 											tour++;
-											System.out.println("possible:  "+possible);
-
-											System.out.println("point : "+point);
-											System.out.println("coordinates:  "+coordinates);
+											demi++;
+											
 										}
-										else if(possible4.contains(point))
+										else if(demi == 1 && possible4.contains(point)&& (!interdit.contains(point.get(0)) && !interdit.contains(point.get(1))))
 										{
 											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
 											
@@ -512,9 +729,60 @@ public class Domination extends BasicGameState {
 											possible4.add(gauche);
 											possible4.add(haut);
 											possible4.add(bas);
+											
+											possibledeux4.add(droite);
+											possibledeux4.add(gauche);
+											possibledeux4.add(haut);
+											possibledeux4.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
 											coordinates.add(point);
-											possible4.remove(point);
+											possible.remove(point);
+											demi++;
 											tour++;
+											
+										}
+										else if(demi == 2 && possibledeux4.contains(point) && possible4.contains(point) && (!interdit.contains(point.get(0)) && !interdit.contains(point.get(1))))
+										{
+											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
+											
+											listx.add(xpos);
+											listy.add(ypos);
+											
+											
+											ArrayList<Integer> droite = new ArrayList<>();
+											droite.add((windows.WIDTH/27)*a+71);
+											droite.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> gauche = new ArrayList<>();
+											gauche.add((windows.WIDTH/27)*a-71);
+											gauche.add(((windows.HEIGHT/27)*(26-b)));
+											ArrayList<Integer> haut = new ArrayList<>();
+											haut.add((windows.WIDTH/27)*a);
+											haut.add(((windows.HEIGHT/27)*(26-b))+40);
+											ArrayList<Integer> bas = new ArrayList<>();
+											bas.add((windows.WIDTH/27)*a);
+											bas.add(((windows.HEIGHT/27)*(26-b))-40);
+											
+											possible4.add(droite);
+											possible4.add(gauche);
+											possible4.add(haut);
+											possible4.add(bas);
+											
+											interdit.add((windows.WIDTH/27)*a+(71*5));
+											interdit.add((windows.WIDTH/27)*a-(71*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))+(40*5));
+											interdit.add(((windows.HEIGHT/27)*(26-b))-(40*5));
+											
+											possibledeux4.clear();
+											
+											coordinates.add(point);
+											possible.remove(point);
+											tour++;
+											demi = 1;
 										}
 									}
 								}
@@ -524,7 +792,7 @@ public class Domination extends BasicGameState {
 				}
 				if(tour ==2)
 				{
-					joueur =1;
+					joueur =4;
 					tour =0;
 				}
 			}
@@ -605,7 +873,7 @@ public class Domination extends BasicGameState {
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 
