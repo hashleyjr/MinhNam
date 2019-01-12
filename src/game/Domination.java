@@ -12,15 +12,16 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+
 import org.lwjgl.input.Mouse;
 
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.*;
 public class Domination extends BasicGameState {
-
+	
+	
 //	mINH nAM
 	String mouse = "";
 	ArrayList<Integer> listx = new ArrayList<>();
@@ -31,7 +32,8 @@ public class Domination extends BasicGameState {
 	ArrayList<ArrayList<Integer>>  coordinates = new ArrayList<>();
 	int i,j;
 	int color = 0;
-	int joueur = 1;
+	
+
 	int tour = 0;
 	int choisir=1;
 	ArrayList<ArrayList<Integer>> possible = new ArrayList<>();
@@ -42,7 +44,7 @@ public class Domination extends BasicGameState {
 	
 //	Hugo afficher dominos
 	Color brown= new Color(126, 51, 0);
-	int nbJoueur = 2;
+	int nbJoueur = 4;
 	DominosTour DominosTour = new DominosTour();
 //	liste avec les dominos de chaque tour
 	ArrayList<ArrayList<ArrayList<ArrayList<String>>>> AllDominos = DominosTour.AllDominoTour(nbJoueur);
@@ -56,14 +58,19 @@ public class Domination extends BasicGameState {
 	ArrayList<Integer> compt6 = new ArrayList<>(Arrays.asList(40,41,42,43,44,45,46,47));
 
 	ArrayList<ArrayList<Integer>> Listecompteur = new ArrayList<>(Arrays.asList(compt1,compt2,compt3,compt4,compt5,compt6));
+//	ArrayList<Integer> OrdreJoueur= DominosTour.ordreRandom();
+	ArrayList<Integer> OrdreJoueur=DominosTour.ordreRandom();
+	ArrayList<Integer> NextOrdreJoueur= new ArrayList<Integer>(Arrays.asList(1,2,3,4));
+
+	int joueur = OrdreJoueur.get(0);
+
 
 //	Selectionner les dominos
 	Joueur Joueur = new Joueur(mouse);
 	public String mouseString = "Pas d'input";
+//	pour selectionner 1 domino
 	ArrayList<ArrayList<String>> ChoixJ1;
-	ArrayList<ArrayList<String>> ChoixJ2;
-	ArrayList<ArrayList<String>> ChoixJ3;
-	ArrayList<ArrayList<String>> ChoixJ4;
+	
 
 	
 	public Domination(int state) {
@@ -73,12 +80,12 @@ public class Domination extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
 		
-		
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
-		System.out.println("liste colour"+couleur);
+		
+		
 		for(int size=0;size<listx.size();size++)
 		{
 			for(int c=0 ;c<30;c++)
@@ -87,10 +94,6 @@ public class Domination extends BasicGameState {
 				{
 					if (listx.get(size)>(windows.WIDTH/27)*c && listx.get(size)<(windows.WIDTH/27)*(c+1) && listy.get(size)>(windows.HEIGHT/27)*d && listy.get(size)<(windows.HEIGHT/27)*(d+1))
 					{
-						System.out.println("choix J1"+ChoixJ1);
-						System.out.println("choix J2"+ChoixJ2);
-
-						System.out.println("taille "+couleur.size());
 
 						if(couleur.get(size).equals("Champs")) {
 						g.setColor(Color.yellow);}
@@ -107,14 +110,30 @@ public class Domination extends BasicGameState {
 						}
 						else {
 							g.setColor(Color.pink);
-						}
-						
+						}					
 						g.fillRect((windows.WIDTH/27)*c,(windows.HEIGHT/27)*(26-d), 213/3, 120/3);
-						
+//						afficher les couronnes
+						if(couronne.get(size).equals("1")) {
+							g.setColor(Color.black);
+							g.fillOval((listx.get(size)-20), (1080-listy.get(size)), 7, 7);
+						}
+						else if(couronne.get(size).equals("2")) {
+							g.setColor(Color.black);
+							g.fillOval((listx.get(size)-20), (1080-listy.get(size)), 7, 7);
+							g.fillOval((listx.get(size)), (1080-listy.get(size)), 7, 7);
+						}
+						else if(couronne.get(size).equals("3")) {
+							g.setColor(Color.black);
+							g.fillOval((listx.get(size)-20), (1080-listy.get(size)), 7, 7);
+							g.fillOval((listx.get(size)), (1080-listy.get(size)), 7, 7);
+							g.fillOval((listx.get(size))+20, (1080-listy.get(size)), 7, 7);
+
+						}
 					}
 				}
 			}
 		}
+//		a quel tour on en est ?
 		int affich=8;
 		if (compt1.contains(CompteurTour) ) {
 			 affich=0;
@@ -130,114 +149,88 @@ public class Domination extends BasicGameState {
 		}if (compt6.contains(CompteurTour) ) {
 			 affich=5;
 		}
-//			pour afficher les rectangles
+//		if(CompteurTour==1 ||CompteurTour==8 ||CompteurTour==16 ||CompteurTour==24 ||CompteurTour==32 ||CompteurTour==40 ) {
+//			OrdreJoueur=NextOrdreJoueur;
+//			System.out.println("compteurTourfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff = "+CompteurTour);
+//		}
+		
+
+		
+		
+//pour afficher les rectangles
 			for(int k=0; k<4;k++) {
 				String area1= ((AllDominos.get(affich)).get(k)).get(0).get(1);
 				String couronne1= ((AllDominos.get(affich)).get(k)).get(0).get(0);
 				String area2= ((AllDominos.get(affich)).get(k)).get(1).get(1);
 				String couronne2=((AllDominos.get(affich)).get(k)).get(1).get(0);
 
-//				afficher le 1er demi domino
-				switch(area1) {
-				case "Champs":
-					g.setColor(Color.yellow);
-					g.fillRect( 700, 500-100*k,100,30);
-
-					break;
-				case "Mer":
-					g.setColor(Color.blue);
-					g.fillRect( 700, 500-100*k,100,30);
-					break;
-				case "Foret":
-					g.setColor(Color.green);
-					g.fillRect( 700, 500-100*k,100,30);
-					break;
-				case "Mine":
-					g.setColor(Color.gray);
-					g.fillRect( 700, 500-100*k,100,30);
-					break;
-					
-				case "Montagne":
-					g.setColor(brown);
-					g.fillRect( 700, 500-100*k,100,30);
-					break;
-				case "Prairie":
-					g.setColor(Color.orange);
-					g.fillRect( 700, 500-100*k,100,30);
-					break;
-				default:
-				}
+//afficher le 1er demi domino et le deuxieme
+				for(int demi=0; demi<2;demi++) {
+					String area="";
+					if(demi==0){
+						area=area1;
+					}
+					if(demi==1) {
+						area=area2;
+					}
+					switch(area) {
+					case "Champs":
+						g.setColor(Color.yellow);
+						g.fillRect( 700+100*demi, 500-100*k,100,30);
+						break;
+					case "Mer":
+						g.setColor(Color.blue);
+						g.fillRect( 700+100*demi, 500-100*k,100,30);
+						break;
+					case "Foret":
+						g.setColor(Color.green);
+						g.fillRect( 700+100*demi, 500-100*k,100,30);
+						break;
+					case "Mine":
+						g.setColor(Color.gray);
+						g.fillRect( 700+100*demi, 500-100*k,100,30);
+						break;
+						
+					case "Montagne":
+						g.setColor(brown);
+						g.fillRect( 700+100*demi, 500-100*k,100,30);
+						break;
+					case "Prairie":
+						g.setColor(Color.orange);
+						g.fillRect( 700+100*demi, 500-100*k,100,30);
+						break;
+					default:
+				}}
 				
-//				afficher le 2e demi domino
-				switch(area2) {
-				case "Champs":
-					g.setColor(Color.yellow);
-					g.fillRect( 800, 500-100*k,100,30);
-
-					break;
-				case "Mer":
-					g.setColor(Color.blue);
-					g.fillRect( 800, 500-100*k,100,30);
-					break;
-				case "Foret":
-					g.setColor(Color.green);
-					g.fillRect( 800, 500-100*k,100,30);
-					break;
-				case "Mine":
-					g.setColor(Color.gray);
-					g.fillRect( 800, 500-100*k,100,30);
-					break;
-					
-				case "Montagne":
-					g.setColor(brown);
-					g.fillRect( 800, 500-100*k,100,30);
-					break;
-				case "Prairie":
-					g.setColor(Color.orange);
-					g.fillRect( 800, 500-100*k,100,30);
-					break;
-				default:
-				}
 				g.setColor(Color.white);
 				
-//				afficher les couronnes du 1er demi domino
-				switch(couronne1) {
-				case "1":
-					g.fillOval(720,510-100*k , 10, 10);
-
-					break;
-				case "2":
-					g.fillOval(720,510-100*k ,10, 10);
-					g.fillOval(740,510-100*k , 10, 10);
-					break;
-				case "3":
-					g.fillOval(720,510-100*k , 10, 10);
-					g.fillOval(740,510-100*k , 10, 10);
-					g.fillOval(760,510-100*k , 10, 10);
-					break;
-				default:
-				
-				}
+//afficher les couronnes du 1er demi domino et le 2e
+				for(int demi=0; demi<2;demi++) {
+					String couronne="";
+					if(demi==0){
+						couronne=couronne1;
+					}
+					if(demi==1) {
+						couronne=couronne2;
+					}
+					switch(couronne) {
+						case "1":
+							g.fillOval(720+demi*100,510-100*k , 10, 10);
+		
+							break;
+						case "2":
+							g.fillOval(720+demi*100,510-100*k ,10, 10);
+							g.fillOval(740+demi*100,510-100*k , 10, 10);
+							break;
+						case "3":
+							g.fillOval(720+demi*100,510-100*k , 10, 10);
+							g.fillOval(740+demi*100,510-100*k , 10, 10);
+							g.fillOval(760+demi*100,510-100*k , 10, 10);
+							break;
+						default:
+				}}
 				g.setColor(Color.white);
 				
-//				aficher les couronnes du 2e demi domino
-				switch(couronne2) {
-				case "1":
-					g.fillOval(820,510-100*k , 10, 10);
-
-					break;
-				case "2":
-					g.fillOval(820,510-100*k , 10, 10);
-					g.fillOval(840,510-100*k , 10, 10);
-					break;
-				case "3":
-					g.fillOval(820,510-100*k ,10, 10);
-					g.fillOval(840,510-100*k , 10, 10);
-					g.fillOval(860,510-100*k ,10, 10);
-					break;
-				default:
-				
-				}
 			}
 			for(int k=0; k<4;k++) {
 				String area1= ((AllDominos.get(affich+1)).get(k)).get(0).get(1);
@@ -245,111 +238,75 @@ public class Domination extends BasicGameState {
 				String area2= ((AllDominos.get(affich+1)).get(k)).get(1).get(1);
 				String couronne2=((AllDominos.get(affich+1)).get(k)).get(1).get(0);
 
-//				afficher le 1er demi domino
-				switch(area1) {
-				case "Champs":
-					g.setColor(Color.yellow);
-					g.fillRect( 950, 500-100*k,100,30);
-
-					break;
-				case "Mer":
-					g.setColor(Color.blue);
-					g.fillRect( 950, 500-100*k,100,30);
-					break;
-				case "Foret":
-					g.setColor(Color.green);
-					g.fillRect( 950, 500-100*k,100,30);
-					break;
-				case "Mine":
-					g.setColor(Color.gray);
-					g.fillRect( 950, 500-100*k,100,30);
-					break;
-					
-				case "Montagne":
-					g.setColor(brown);
-					g.fillRect( 950, 500-100*k,100,30);
-					break;
-				case "Prairie":
-					g.setColor(Color.orange);
-					g.fillRect( 950, 500-100*k,100,30);
-					break;
-				default:
-				}
+//afficher le 1er demi domino et le 2e
+				for(int demi=0; demi<2;demi++) {
+					String area="";
+					if(demi==0){
+						area=area1;
+					}
+					if(demi==1) {
+						area=area2;
+					}
+					switch(area) {
+						case "Champs":
+							g.setColor(Color.yellow);
+							g.fillRect( 950+100*demi, 500-100*k,100,30);
+		
+							break;
+						case "Mer":
+							g.setColor(Color.blue);
+							g.fillRect( 950+100*demi, 500-100*k,100,30);
+							break;
+						case "Foret":
+							g.setColor(Color.green);
+							g.fillRect( 950+100*demi, 500-100*k,100,30);
+							break;
+						case "Mine":
+							g.setColor(Color.gray);
+							g.fillRect( 950+100*demi, 500-100*k,100,30);
+							break;
+							
+						case "Montagne":
+							g.setColor(brown);
+							g.fillRect( 950+100*demi, 500-100*k,100,30);
+							break;
+						case "Prairie":
+							g.setColor(Color.orange);
+							g.fillRect( 950+100*demi, 500-100*k,100,30);
+							break;
+						default:
+				}}
 				
-//				afficher le 2e demi domino
-				switch(area2) {
-				case "Champs":
-					g.setColor(Color.yellow);
-					g.fillRect( 1050, 500-100*k,100,30);
-
-					break;
-				case "Mer":
-					g.setColor(Color.blue);
-					g.fillRect( 1050, 500-100*k,100,30);
-					break;
-				case "Foret":
-					g.setColor(Color.green);
-					g.fillRect( 1050, 500-100*k,100,30);
-					break;
-				case "Mine":
-					g.setColor(Color.gray);
-					g.fillRect( 1050, 500-100*k,100,30);
-					break;
-					
-				case "Montagne":
-					g.setColor(brown);
-					g.fillRect( 1050, 500-100*k,100,30);
-					break;
-				case "Prairie":
-					g.setColor(Color.orange);
-					g.fillRect( 1050, 500-100*k,100,30);
-					break;
-				default:
-				}
-				
-//				afficher les couronnes du 1er demi domino
-				switch(couronne1) {
+//afficher les couronnes du 1er demi domino
+				for(int demi=0; demi<2;demi++) {
+					String couronne="";
+					if(demi==0){
+						couronne=couronne1;
+					}
+					if(demi==1) {
+						couronne=couronne2;
+					}
+				switch(couronne) {
 				case "1":
 					g.setColor(Color.white);
-					g.fillOval(970,510-100*k , 10, 10);
+					g.fillOval(970+100*demi,510-100*k , 10, 10);
 
 					break;
 				case "2":
 					g.setColor(Color.white);
-					g.fillOval(970,510-100*k ,10, 10);
-					g.fillOval(990,510-100*k , 10, 10);
+					g.fillOval(970+100*demi,510-100*k ,10, 10);
+					g.fillOval(990+100*demi,510-100*k , 10, 10);
 					break;
 				case "3":
 					g.setColor(Color.white);
-					g.fillOval(970,510-100*k , 10, 10);
-					g.fillOval(990,510-100*k , 10, 10);
-					g.fillOval(10100,510-100*k , 10, 10);
+					g.fillOval(970+100*demi,510-100*k , 10, 10);
+					g.fillOval(990+100*demi,510-100*k , 10, 10);
+					g.fillOval(10100+100*demi,510-100*k , 10, 10);
 					break;
 				default:
 				
-				}
+				}}
 				
-//				aficher les couronnes du 2e demi domino
-				switch(couronne2) {
-				case "1":
-					g.setColor(Color.white);
-					g.fillOval(1070,510-100*k , 10, 10);
-
-					break;
-				case "2":
-					g.setColor(Color.white);
-					g.fillOval(1070,510-100*k , 10, 10);
-					g.fillOval(1090,510-100*k , 10, 10);
-					break;
-				case "3":
-					g.setColor(Color.white);
-					g.fillOval(1070,510-100*k ,10, 10);
-					g.fillOval(1090,510-100*k , 10, 10);
-					g.fillOval(1110,510-100*k ,10, 10);
-					break;
-				default:
-				
-				}
 			}
 		
 		Image castle = new Image("res/domination.jpg");
@@ -363,7 +320,6 @@ public class Domination extends BasicGameState {
 		int xpos = Mouse.getX();
 		int ypos = Mouse.getY();
 		g.drawString("Choisir un dominos", 700, 100);
-				System.out.println("TOur J1");
 				if(joueur == 1 )
 				{
 					if(tour==0) {
@@ -371,33 +327,44 @@ public class Domination extends BasicGameState {
 
 						if(input.isMousePressed(0)) {
 
-							if(xpos>700 && xpos<900 &&ypos<880 && ypos>830) {
+							if(xpos>950 && xpos<1150 &&ypos<880 && ypos>830) {
 								ChoixJ1 = Joueur.Choix(3, affich, AllDominos);
 								choisir=0;
-								System.out.println("sominos 4"+ChoixJ1);
+								NextOrdreJoueur.set(3,1);
+								System.out.println("choix joueur 1");
+								System.out.println("1NextOrdreJoueur : "+NextOrdreJoueur);
+								System.out.println("1OrdreJoueur : "+OrdreJoueur);
+
 								
 							}
 						
-							else if(xpos>700 && xpos<900 &&ypos<780 && ypos>730) {
+							else if(xpos>950 && xpos<1150 &&ypos<780 && ypos>730) {
 								ChoixJ1 = Joueur.Choix(2, affich, AllDominos);
 								choisir=0;
-								System.out.println("sominos 3"+ChoixJ1);
-
+								NextOrdreJoueur.set(2,1);
+								System.out.println("choix joueur 1");
+								System.out.println("1NextOrdreJoueur : "+NextOrdreJoueur);
+								System.out.println("1OrdreJoueur : "+OrdreJoueur);
 							
 						}			
 						
-							else if(xpos>700 && xpos<900 &&ypos<680 && ypos>630) {
+							else if(xpos>950 && xpos<1150 &&ypos<680 && ypos>630) {
 								ChoixJ1 = Joueur.Choix(1, affich, AllDominos);
 								choisir=0;
-								System.out.println("sominos 2"+ChoixJ1);
-
+								NextOrdreJoueur.set(1,1);
+								System.out.println("choix joueur 1");
+								System.out.println("1NextOrdreJoueur : "+NextOrdreJoueur);
+								System.out.println("1OrdreJoueur : "+OrdreJoueur);
 							}
 									
-							else if(xpos>700 && xpos<900 &&ypos<580 && ypos>530) {
+							else if(xpos>950 && xpos<1150 &&ypos<580 && ypos>530) {
 								ChoixJ1 = Joueur.Choix( 0, affich, AllDominos);
 								choisir=0;
-								System.out.println("Dominos 1"+ChoixJ1);
-							}
+								NextOrdreJoueur.set(0,1);
+
+								System.out.println("choix joueur 1");
+								System.out.println("1NextOrdreJoueur : "+NextOrdreJoueur);
+								System.out.println("1OrdreJoueur : "+OrdreJoueur);							}
 							else {
 								System.out.println("rieeeeeeeeeen");
 							}
@@ -448,16 +415,16 @@ public class Domination extends BasicGameState {
 												String couronne1= ((ChoixJ1.get(0)).get(0));
 												String area2= ((ChoixJ1.get(1)).get(1));
 												String couronne2=((ChoixJ1.get(1)).get(0));
-												System.out.println("dominos J1"+ area1 + ""+couronne1+area2+couronne2);
 												//
 												if(tour==0) {
 												
 												couleur.add(area1);
-												System.out.println("area1 "+ area1);
+												couronne.add(couronne1);
 												}
 												else if(tour==1) {
 													
 													couleur.add(area2);
+													couronne.add(couronne2);
 													}
 												
 												listx.add(xpos);
@@ -500,16 +467,17 @@ public class Domination extends BasicGameState {
 												String couronne1= ((ChoixJ1.get(0)).get(0));
 												String area2= ((ChoixJ1.get(1)).get(1));
 												String couronne2=((ChoixJ1.get(1)).get(0));
-												System.out.println("dominos J1"+ area1 + ""+couronne1+area2+couronne2);
 												System.out.println("tour "+ tour);
 												//
 												if(tour==0) {
 												
 												couleur.add(area1);
+												couronne.add(couronne1);
 												}
 												else if(tour==1) {
 													
 													couleur.add(area2);
+													couronne.add(couronne2);
 													}
 
 												listx.add(xpos);
@@ -545,61 +513,69 @@ public class Domination extends BasicGameState {
 						}
 					}
 						if(tour ==2)
-						{
-							joueur =2;
+						{	
+							System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+							System.out.println("le suivant indice"+(OrdreJoueur.indexOf(1)+1));
+								System.out.println("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+								if(OrdreJoueur.indexOf(1)+1<4) {
+									joueur =OrdreJoueur.get(OrdreJoueur.indexOf(1)+1);
+									System.out.println("apres 1 c'est "+OrdreJoueur.get(OrdreJoueur.indexOf(1)+1));
+								}
+								else {
+									System.out.println("on echange et on a "+OrdreJoueur+" qui de vient "+NextOrdreJoueur);
+									for(int h=0;h<4;h++) {
+										OrdreJoueur.set(h, NextOrdreJoueur.get(h));
+									}
+									System.out.println("affich "+affich);
+									joueur=OrdreJoueur.get(0);
+								}
 							tour =0;
 							choisir=1;
 							ChoixJ1.remove(0);
 							ChoixJ1.remove(0);
 						}
 				}}
-				System.out.println("TOur J2");
-				System.out.println("  ");
 
 				if(joueur == 2 )
 				{	
-					System.out.println("joueur2"+ChoixJ1);
-					System.out.println("tour : "+tour);
-					System.out.println("choisir : "+choisir);
 
 					if(tour==0) {
 						if(choisir==1) {
 
 							if(input.isMousePressed(0)) {
 
-								if(xpos>700 && xpos<900 &&ypos<880 && ypos>830) {
+								if(xpos>950 && xpos<1150 &&ypos<880 && ypos>830) {
 									ChoixJ1 = Joueur.Choix(3, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(3,2);
 									System.out.println("4");
-									System.out.println("joueur2      1"+ChoixJ2);
 									
 								}
 							
-								else if(xpos>700 && xpos<900 &&ypos<780 && ypos>730) {
+								else if(xpos>950 && xpos<1150 &&ypos<780 && ypos>730) {
 									ChoixJ1 = Joueur.Choix(2, affich, AllDominos);
 									choisir=0;
-									System.out.println("3");
+									NextOrdreJoueur.set(2,2);
 
-									System.out.println("joueur2        2"+ChoixJ1);
 
 								
 							}			
 							
-								else if(xpos>700 && xpos<900 &&ypos<680 && ypos>630) {
+								else if(xpos>950 && xpos<1150 &&ypos<680 && ypos>630) {
 									ChoixJ1 = Joueur.Choix(1, affich, AllDominos);
 									choisir=0;
-									System.out.println("2");
+									NextOrdreJoueur.set(1,2);
 
-									System.out.println("joueur2"+ChoixJ1);
+									System.out.println("joueur 2 ordre"+NextOrdreJoueur);
+
 
 								}
 										
-								else if(xpos>700 && xpos<900 &&ypos<580 && ypos>530) {
+								else if(xpos>950 && xpos<1150 &&ypos<580 && ypos>530) {
 									ChoixJ1 = Joueur.Choix( 0, affich, AllDominos);
 									choisir=0;
-									System.out.println("joueur2"+ChoixJ1);
-
-									System.out.println("Dominos 1"+ChoixJ1);
+									NextOrdreJoueur.set(0,2);
+									System.out.println("joueur 2 ordr"+NextOrdreJoueur);
 								}
 							
 						}}}
@@ -650,15 +626,16 @@ public class Domination extends BasicGameState {
 											String couronne2=((ChoixJ1.get(1)).get(0));
 											System.out.println("dominos"+ area1 + ""+couronne1+area2+couronne2);
 											System.out.println("tour "+ tour);
-											System.out.println("joueur2"+ChoixJ2);
 											//
 											if(tour==0) {
 											
 											couleur.add(area1);
+											couronne.add(couronne1);
 											}
 											else if(tour==1) {
 												
 												couleur.add(area2);
+												couronne.add(couronne2);
 												}
 											
 											listx.add(xpos);
@@ -702,14 +679,15 @@ public class Domination extends BasicGameState {
 											String couronne2=((ChoixJ1.get(1)).get(0));
 											System.out.println("dominos"+ area1 + ""+couronne1+area2+couronne2);
 											System.out.println("tour "+ tour);
-											System.out.println("joueur2"+ChoixJ2);
 
 											//
 											if(tour==0) {
 											couleur.add(area1);
+											couronne.add(couronne1);
 											}
 											else if(tour==1) {
 												couleur.add(area2);
+												couronne.add(couronne2);
 
 												}
 											listx.add(xpos);
@@ -746,12 +724,25 @@ public class Domination extends BasicGameState {
 					}
 					if(tour ==2)
 					{
-						joueur =3;
+						System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+						System.out.println(OrdreJoueur.indexOf(2)+1);
+							System.out.println("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+							if(OrdreJoueur.indexOf(2)+1<4) {
+								joueur =OrdreJoueur.get(OrdreJoueur.indexOf(2)+1);
+								System.out.println("apres 2 c'est "+OrdreJoueur.get(OrdreJoueur.indexOf(2)+1));
+							}
+							else {
+								System.out.println("on echange et on a "+OrdreJoueur+" qui de vient "+NextOrdreJoueur);
+								for(int h=0;h<4;h++) {
+									OrdreJoueur.set(h, NextOrdreJoueur.get(h));
+								}
+								joueur=OrdreJoueur.get(0);
+
+							}
 						tour =0;
 						choisir=1;
 						ChoixJ1.remove(0);
 						ChoixJ1.remove(0);
-					
 
 					}
 				}}
@@ -761,32 +752,38 @@ public class Domination extends BasicGameState {
 						if(choisir==1) {
 
 							if(input.isMousePressed(0)) {
+								System.out.println("avant les selections "+OrdreJoueur);
 
-								if(xpos>700 && xpos<900 &&ypos<880 && ypos>830) {
+								if(xpos>950 && xpos<1150 &&ypos<880 && ypos>830) {
 									ChoixJ1 = Joueur.Choix(3, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(3,3);
 									System.out.println("sominos 4"+ChoixJ1);
 									
 								}
 							
-								else if(xpos>700 && xpos<900 &&ypos<780 && ypos>730) {
+								else if(xpos>950 && xpos<1150 &&ypos<780 && ypos>730) {
 									ChoixJ1 = Joueur.Choix(2, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(2,3);
 									System.out.println("sominos 3"+ChoixJ1);
 
 								
 							}			
-							
-								else if(xpos>700 && xpos<900 &&ypos<680 && ypos>630) {
+
+								else if(xpos>950 && xpos<1150 &&ypos<680 && ypos>630) {
 									ChoixJ1 = Joueur.Choix(1, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(1,3);
 									System.out.println("sominos 2"+ChoixJ1);
+									System.out.println("dans les selections "+OrdreJoueur);
 
 								}
 										
-								else if(xpos>700 && xpos<900 &&ypos<580 && ypos>530) {
+								else if(xpos>950 && xpos<1150 &&ypos<580 && ypos>530) {
 									ChoixJ1 = Joueur.Choix( 0, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(0,3);
 									System.out.println("Dominos 1"+ChoixJ1);
 								}
 								else {
@@ -844,11 +841,13 @@ public class Domination extends BasicGameState {
 											if(tour==0) {
 											
 											couleur.add(area1);
+											couronne.add(couronne1);
 											System.out.println("area1 "+ area1);
 											}
 											else if(tour==1) {
 												
 												couleur.add(area2);
+												couronne.add(couronne2);
 												}
 
 											listx.add(xpos);
@@ -896,11 +895,13 @@ public class Domination extends BasicGameState {
 											if(tour==0) {
 											
 											couleur.add(area1);
+											couronne.add(couronne1);
 											System.out.println("area1 "+ area1);
 											}
 											else if(tour==1) {
 												
 												couleur.add(area2);
+												couronne.add(couronne2);
 												}
 
 											listx.add(xpos);
@@ -934,9 +935,29 @@ public class Domination extends BasicGameState {
 							}
 						}
 					}
+					System.out.println("avnt tour="+OrdreJoueur);
 					if(tour ==2)
 					{
-						joueur =4;
+						System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+						System.out.println("prochain indice "+(OrdreJoueur.indexOf(3)+1));
+						System.out.println("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+							if(OrdreJoueur.indexOf(3)+1<4) {
+								int next=OrdreJoueur.indexOf(3)+1;
+								joueur =OrdreJoueur.get(next);
+								System.out.println("lindice de 3 c'est "+OrdreJoueur.indexOf(3));
+								System.out.println("apres 3 c'est "+joueur);
+								System.out.println("OrdreJoueur-->"+OrdreJoueur);
+
+							}
+							else {
+								System.out.println("on echange et on a "+OrdreJoueur+" qui de vient "+NextOrdreJoueur);
+								for(int h=0;h<4;h++) {
+									OrdreJoueur.set(h, NextOrdreJoueur.get(h));
+								}
+								joueur=OrdreJoueur.get(0);
+
+							}
+							System.out.println("OrdreJoueur-->"+OrdreJoueur);
 						tour =0;
 						choisir=1;
 						ChoixJ1.remove(0);
@@ -951,31 +972,35 @@ public class Domination extends BasicGameState {
 
 							if(input.isMousePressed(0)) {
 
-								if(xpos>700 && xpos<900 &&ypos<880 && ypos>830) {
+								if(xpos>950 && xpos<1150 &&ypos<880 && ypos>830) {
 									ChoixJ1 = Joueur.Choix(3, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(3,4);
 									System.out.println("sominos 4"+ChoixJ1);
 									
 								}
 							
-								else if(xpos>700 && xpos<900 &&ypos<780 && ypos>730) {
+								else if(xpos>950 && xpos<1150 &&ypos<780 && ypos>730) {
 									ChoixJ1 = Joueur.Choix(2, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(2,4);
 									System.out.println("sominos 3"+ChoixJ1);
 
 								
 							}			
 							
-								else if(xpos>700 && xpos<900 &&ypos<680 && ypos>630) {
+								else if(xpos>950 && xpos<1150 &&ypos<680 && ypos>630) {
 									ChoixJ1 = Joueur.Choix(1, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(1,4);
 									System.out.println("sominos 2"+ChoixJ1);
 
 								}
 										
-								else if(xpos>700 && xpos<900 &&ypos<580 && ypos>530) {
+								else if(xpos>950 && xpos<1150 &&ypos<580 && ypos>530) {
 									ChoixJ1 = Joueur.Choix( 0, affich, AllDominos);
 									choisir=0;
+									NextOrdreJoueur.set(0,4);
 									System.out.println("Dominos 1"+ChoixJ1);
 								}
 								else {
@@ -1039,11 +1064,12 @@ public class Domination extends BasicGameState {
 											if(tour==0) {
 											
 											couleur.add(area1);
-											System.out.println("area1 "+ area1);
+											couronne.add(couronne1);
 											}
 											else if(tour==1) {
 												
 												couleur.add(area2);
+												couronne.add(couronne2);
 												}
 											
 											listx.add(xpos);
@@ -1091,11 +1117,13 @@ public class Domination extends BasicGameState {
 											if(tour==0) {
 											
 											couleur.add(area1);
+											couronne.add(couronne1);
 											System.out.println("area1 "+ area1);
 											}
 											else if(tour==1) {
 												
 												couleur.add(area2);
+												couronne.add(couronne2);
 												}
 
 											listx.add(xpos);
@@ -1134,7 +1162,21 @@ public class Domination extends BasicGameState {
 				
 				if(tour ==2)
 				{
-					joueur =1;
+					System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+						System.out.println("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+						if(OrdreJoueur.indexOf(4)+1<4) {
+							joueur =OrdreJoueur.get(OrdreJoueur.indexOf(4)+1);
+							System.out.println("apres 4 c'est "+OrdreJoueur.get(OrdreJoueur.indexOf(4)+1));
+						}
+						else {
+							System.out.println("on echange et on a "+OrdreJoueur+" qui de vient "+NextOrdreJoueur);
+							for(int h=0;h<4;h++) {
+								OrdreJoueur.set(h, NextOrdreJoueur.get(h));
+							}
+							joueur=OrdreJoueur.get(0);
+
+						}
+						System.out.println("apres le joueur4 Ordre = "+OrdreJoueur);
 					tour =0;
 					choisir=1;
 					ChoixJ1.remove(0);
