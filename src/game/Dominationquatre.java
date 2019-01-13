@@ -86,7 +86,7 @@ public class Dominationquatre extends BasicGameState {
 
 	ArrayList<ArrayList<Integer>> Listecompteur = new ArrayList<>(Arrays.asList(compt1,compt2,compt3,compt4,compt5,compt6));
 //	ArrayList<Integer> OrdreJoueur= DominosTour.ordreRandom();
-	ArrayList<Integer> OrdreJoueur=DominosTour.ordreRandom();
+	ArrayList<Integer> OrdreJoueur=DominosTour.ordreRandom(4);
 	ArrayList<Integer> NextOrdreJoueur= new ArrayList<Integer>(Arrays.asList(1,2,3,4));
 
 	int joueur = OrdreJoueur.get(0);
@@ -112,7 +112,52 @@ public class Dominationquatre extends BasicGameState {
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
+g.drawString(mouse, 100, 100);
 		
+		g.drawString(mouseString, 400, 40);
+
+		Input input =gc.getInput();
+		int xpos = Mouse.getX();
+		int ypos = Mouse.getY();
+
+		
+
+		
+//		a quel tour on en est ?
+		int affich=8;
+		if (compt1.contains(CompteurTour) ) {
+			 affich=0;
+		}else if (compt2.contains(CompteurTour) ) {
+			 affich=1;
+		}else if (compt3.contains(CompteurTour) ) {
+			 affich=2;
+		}else if (compt4.contains(CompteurTour) ) {
+			 affich=3;
+		}else if (compt5.contains(CompteurTour) ) {
+			 affich=4;
+		}else if (compt6.contains(CompteurTour) ) {
+			 affich=5;
+		}else if (compt7.contains(CompteurTour) ) {
+			 affich=6;
+		}else if (compt8.contains(CompteurTour) ) {
+			 affich=7;
+		}else if (compt9.contains(CompteurTour) ) {
+			 affich=8;
+		}else if (compt10.contains(CompteurTour) ) {
+			 affich=9;
+		}else if (compt11.contains(CompteurTour) ) {
+			 affich=10;
+		}
+		else {
+			affich=11;
+		}
+
+		if(affich==11) {
+			g.setColor(Color.red);
+			g.fillRect(0, 0, 2000, 1200);
+			g.setColor(Color.white);
+			g.drawString("gagnant joueur 3 avec 26 points", 850, 400);
+		}
 		
 		for(int size=0;size<listx.size();size++)
 		{
@@ -161,36 +206,9 @@ public class Dominationquatre extends BasicGameState {
 				}
 			}
 		}
-//		a quel tour on en est ?
-		int affich=8;
-		if (compt1.contains(CompteurTour) ) {
-			 affich=0;
-		}if (compt2.contains(CompteurTour) ) {
-			 affich=1;
-		}if (compt3.contains(CompteurTour) ) {
-			 affich=2;
-		}if (compt4.contains(CompteurTour) ) {
-			 affich=3;
-		}if (compt5.contains(CompteurTour) ) {
-			 affich=4;
-		}if (compt6.contains(CompteurTour) ) {
-			 affich=5;
-		}if (compt7.contains(CompteurTour) ) {
-			 affich=6;
-		}if (compt8.contains(CompteurTour) ) {
-			 affich=7;
-		}if (compt9.contains(CompteurTour) ) {
-			 affich=8;
-		}if (compt10.contains(CompteurTour) ) {
-			 affich=9;
-		}if (compt11.contains(CompteurTour) ) {
-			 affich=10;
-		}
-		
-
 
 		
-		
+		if(affich!=11) {
 //pour afficher les rectangles
 			for(int k=0; k<4;k++) {
 				String area1= ((AllDominos.get(affich)).get(k)).get(0).get(1);
@@ -266,7 +284,7 @@ public class Dominationquatre extends BasicGameState {
 				g.setColor(Color.white);
 				
 			}
-			if(affich<6) {
+			if(affich<11) {
 			for(int k=0; k<4;k++) {
 				String area1= ((AllDominos.get(affich+1)).get(k)).get(0).get(1);
 				String couronne1= ((AllDominos.get(affich+1)).get(k)).get(0).get(0);
@@ -342,18 +360,12 @@ public class Dominationquatre extends BasicGameState {
 				
 				}}
 				
-			}}
+			}}}
 		
 		Image castle = new Image("res/domination.jpg");
 		
 
-		g.drawString(mouse, 100, 100);
 		
-		g.drawString(mouseString, 400, 40);
-
-		Input input =gc.getInput();
-		int xpos = Mouse.getX();
-		int ypos = Mouse.getY();
 		g.drawString("Choisir un dominos", 700, 100);
 				if(joueur == 1 )
 				{
@@ -480,7 +492,7 @@ public class Dominationquatre extends BasicGameState {
 											if(coordinates.size()==0 && possible.contains(point))
 											{
 
-//												Domino sélectionné
+//												Domino sÃ©lectionnÃ©
 												
 												g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
 												listx.add(xpos);
@@ -656,7 +668,7 @@ public class Dominationquatre extends BasicGameState {
 												
 												g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
 												
-//												//Domino sélectionné
+//												//Domino sÃ©lectionnÃ©
 //												String area1= ((ChoixJ1.get(0)).get(1));
 //												String couronne1= ((ChoixJ1.get(0)).get(0));
 //												String area2= ((ChoixJ1.get(1)).get(1));
@@ -838,7 +850,7 @@ public class Dominationquatre extends BasicGameState {
 													
 													g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
 													
-//													//Domino sélectionné
+//													//Domino sÃ©lectionnÃ©
 //													String area1= ((ChoixJ1.get(0)).get(1));
 //													String couronne1= ((ChoixJ1.get(0)).get(0));
 //													String area2= ((ChoixJ1.get(1)).get(1));
@@ -1707,7 +1719,7 @@ public class Dominationquatre extends BasicGameState {
 
 							if(input.isMousePressed(0)) {
 								
-								if(xpos>800 && xpos<950 &&ypos<100 && ypos>40) {
+								if(xpos>950 && xpos<1150 &&ypos<880 && ypos>830) {
 									ChoixJ1 = Joueur.Choix(OrdreJoueur.indexOf(joueur), affich, AllDominos);
 									choisir=0;
 									NextOrdreJoueur.set(3,3);
@@ -2479,7 +2491,7 @@ public class Dominationquatre extends BasicGameState {
 										{
 											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
 											
-											//Domino sélectionné
+											//Domino sÃ©lectionnÃ©
 											
 											if(tour==0) {
 											
@@ -2652,7 +2664,7 @@ public class Dominationquatre extends BasicGameState {
 										{
 											if((area1.equals("Champs")&& possiblechamps.contains(point)) || (area1.equals("Mer")&& possiblemer.contains(point)) ||(area1.equals("Mine")&& possiblemine.contains(point)) ||(area1.equals("Montagne")&& possiblemontagne.contains(point)) || (area1.equals("Foret")&& possibleforet.contains(point)) || (area1.equals("Prairie")&& possibleprairie.contains(point)) ){
 											g.fillRect((windows.WIDTH/27)*a,(windows.HEIGHT/27)*(26-b), 213/3, 120/3);
-											//Domino sélectionné
+											//Domino sÃ©lectionnÃ©
 											
 											if(tour==0) {
 											
@@ -3032,7 +3044,7 @@ public class Dominationquatre extends BasicGameState {
 
 		
 		g.setColor(Color.white);
-		// Joueur 3 en haut à gauche 
+		// Joueur 3 en haut Ã  gauche 
 		for (i=0;i<10;i++)
 		{
 			g.drawLine((windows.WIDTH/27)*i,0,(windows.WIDTH/27)*i,windows.HEIGHT/3);
@@ -3045,7 +3057,7 @@ public class Dominationquatre extends BasicGameState {
 		g.drawString("Joueur 3 ", 15 , windows.HEIGHT/3 +10);
 		
 		
-		//Joueur 1 en bas à gauche
+		//Joueur 1 en bas Ã  gauche
 		
 		for (i=0;i<10;i++)
 		{
@@ -3059,7 +3071,7 @@ public class Dominationquatre extends BasicGameState {
 		castle.draw(284, 880,213/3,40);
 		g.drawString("Joueur 1 ", 15 , windows.HEIGHT*2/3 -25);
 		
-		//Joueur 2 en haut à droite
+		//Joueur 2 en haut Ã  droite
 		
 		for (i=0;i<10;i++)
 		{
@@ -3075,7 +3087,7 @@ public class Dominationquatre extends BasicGameState {
 		g.drawString("Joueur 2 ", windows.WIDTH-100 , windows.HEIGHT/3 +10);
 		
 		
-		//Joueur 4 en bas à droite
+		//Joueur 4 en bas Ã  droite
 		
 		for (i=0;i<10;i++)
 		{
@@ -3089,9 +3101,16 @@ public class Dominationquatre extends BasicGameState {
 		}
 		g.drawString("Joueur 4 ", windows.WIDTH -100 , windows.HEIGHT*2/3 -25);
 		castle.draw(1562, 880,213/3,40);
+		
+		if(affich!=11) {
+		g.drawString("Ordre de tour :  "+OrdreJoueur, 850 , 700);
 		g.drawString("Tour du joueur :  "+joueur, windows.WIDTH/2 , windows.HEIGHT/2);
 		g.drawString("Defosser", 850, 1000);
-
+		}
+		else {
+		g.drawString("jeu terminÃ©",850 , 50);
+		g.drawRect(820, 40, 150, 50);
+		}
 	}
 
 	@Override
